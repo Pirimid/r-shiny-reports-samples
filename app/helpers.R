@@ -51,8 +51,8 @@ plot_size_by_bank <- function(dt, dom, yAxisLabel, desc = FALSE) {
     molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%Y/%m/%d %H:%M:%S")
 
     bidSizeAskSize <- ggplot(data=molted,
-             aes(x=FEED_TIME, y=value, colour=SOURCE, group=SOURCE)) + geom_line(aes(group=factor(SOURCE)),size=2) + 
-              xlab("Date") + ylab("Prices") + theme(axis.text.y  = element_text(size=20),
+             aes(x=FEED_TIME, y=value / 1000000, colour=SOURCE, group=SOURCE)) + geom_line(aes(group=factor(SOURCE)),size=2) + 
+              xlab("Date") + ylab("Size (In million)") + theme(axis.text.y  = element_text(size=20),
                                               axis.title.y  = element_text(size=28),
                                               axis.text.x  = element_text(size=20, angle=45, hjust=1),
                                               axis.title.x  = element_text(size=26))
