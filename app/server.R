@@ -22,6 +22,7 @@ dt <- fread('data/fx_data.csv')
 dt <- dt[duplicated(dt),]
 dt <- dt[dt$SOURCE != "JPMCFX"]
 source <- sort(unique(dt$SOURCE))
+dt$SPREAD = dt$ASK_PRICE - dt$BID_PRICE
 
 # Shiny server 
 shinyServer(function(input, output, session) {
@@ -67,6 +68,15 @@ shinyServer(function(input, output, session) {
             dt = dt.agg() %>% select(SOURCE, FEED_TIME, ASK_SIZE, BID_SIZE),
             dom = "bidSizeAskSize",
             yAxisLabel = "Size of Ask and Bid",
+            desc= TRUE
+        )
+    })
+
+    output$spread <- renderPlot({
+        plot_spread_by_bank(
+            dt = dt.agg() %>% select(SOURCE, FEED_TIME, SPREAD),
+            dom = "spread",
+            yAxisLabel = "Spread",
             desc= TRUE
         )
     })

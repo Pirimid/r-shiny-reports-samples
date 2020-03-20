@@ -31,6 +31,8 @@ shinyUI(
                                     plotOutput("bidAsk"),
                                     h4('Bid Size and Ask Size', align = "center"),
                                     plotOutput("bidSizeAskSize"),
+                                    h4('Spread', align = "center"),
+                                    plotOutput("spread")
                             )
                         ),
                         # Data 

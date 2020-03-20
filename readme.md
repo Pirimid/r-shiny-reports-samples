@@ -17,7 +17,9 @@ The demo of the app can be found [here](https://pirimiddemo.shinyapps.io/fx_spre
 
 2. Sample Graphs
 
-    ![Graphs Sample](/resources/plots_by_banks.PNG)
+    ![Graphs Sample](/resources/sample_graphs.PNG)
+
+    ![Spread](/resources/spread.PNG)
 
 3. Filters
 
