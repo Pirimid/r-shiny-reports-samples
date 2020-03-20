@@ -8,3 +8,17 @@ Data has different `ASK` and `BID` prices and other tick data provided by banks.
 
 ## Demo
 The demo of the app can be found [here](https://pirimiddemo.shinyapps.io/fx_spread/).
+
+### Sample Picture
+
+1. Panel
+
+    ![Panel](/resources/panel.PNG)
+
+2. Sample Graphs
+
+    ![Graphs Sample](/resources/plots_by_banks.PNG)
+
+3. Filters
+
+    ![Filters](/resources/filters.PNG)
