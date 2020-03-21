@@ -4,6 +4,7 @@ library(shiny)
 library(ggplot2)
 library(rCharts)
 library(ggvis)
+library(plotly)
 
 # Data processing libraries
 library(data.table)
@@ -32,7 +33,7 @@ shinyServer(function(input, output, session) {
     # Define and initialize reactive values
     values <- reactiveValues()
     values$source <- source
-    
+
     output$selectSource <- renderUI({
         checkboxGroupInput('selectSource', 'Banks', choices=source, selected=values$source)
     })
@@ -54,27 +55,28 @@ shinyServer(function(input, output, session) {
     })
     
     # Render Plots
-    # Ask and bid by Bank
-    output$Ask <- renderPlot({
-        plot_ask_by_bank(
-            dt = dt.agg() %>% select(SOURCE, FEED_TIME, ASK_PRICE),
-            dom = "Ask",
+    # Ask or bid by Bank
+    output$prices <- renderPlotly({
+        plot_prices_by_bank(
+            dt =  filter_price_data(dt.agg() %>% select(SOURCE, FEED_TIME, ASK_PRICE, BID_PRICE), input$askBid),
+            dom = "prices",
             yAxisLabel = "Prices",
             desc = TRUE
         )
         })
     
-    # Ask and Bid size by bank
-    output$Bid <- renderPlot({
-        plot_bid_by_bank(
-            dt = dt.agg() %>% select(SOURCE, FEED_TIME, BID_PRICE),
-            dom = "Bid",
-            yAxisLabel = "Price",
+    # Ask or Bid size by bank
+    output$size <- renderPlotly({
+        plot_size_by_bank(
+            dt = filter_size_data(dt.agg() %>% select(SOURCE, FEED_TIME, ASK_SIZE, BID_SIZE), input$askBid),
+            dom = "size",
+            yAxisLabel = "Size",
             desc= TRUE
         )
     })
 
-    output$spread <- renderPlot({
+    # Spread by Banks
+    output$spread <- renderPlotly({
         plot_spread_by_bank(
             dt = dt.agg() %>% select(SOURCE, FEED_TIME, SPREAD),
             dom = "spread",

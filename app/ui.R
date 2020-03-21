@@ -2,6 +2,7 @@ library(shiny)
 
 # Fix tag("div", list(...)) : could not find function "showOut… 
 library(rCharts)
+library(plotly)
 
 shinyUI(
     navbarPage("FX Data Explorer",
@@ -20,18 +21,18 @@ shinyUI(
                             column(3,
                                 wellPanel(
                                     radioButtons(
-                                        "byCurrency",
-                                        "Currency Pair:",
-                                        c("All" = "all", "USDMXN" = "USDMXN"))
+                                        "askBid",
+                                        "Type",
+                                        c("ASK" = "ASK", "BID" = "BID"))
                                 )
                             ),
                             column(7,
-                                    h4('Ask Price', align = "center"),
-                                    plotOutput("Ask"),
-                                    h4('Bid Price', align = "center"),
-                                    plotOutput("Bid"),
+                                    h4('Ask or Bid Price', align = "center"),
+                                    plotlyOutput("prices"),
+                                    h4('Ask or Bid Size', align = "center"),
+                                    plotlyOutput("size"),
                                     h4('Spread', align = "center"),
-                                    plotOutput("spread")
+                                    plotlyOutput("spread")
                             )
                         ),
                         # Data 
