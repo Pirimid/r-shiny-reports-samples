@@ -19,10 +19,12 @@ source("helpers.R", local = TRUE)
 
 # Load data
 dt <- fread('data/fx_data.csv')
-dt <- dt[duplicated(dt),]
-dt <- dt[dt$SOURCE != "JPMCFX"]
+dt <- dt %>% group_by(SOURCE, FEED_TIME)
+dt <- dt[!duplicated(dt[,c('FEED_TIME')]),]
+# dt <- dt[dt$SOURCE != "JPMCFX"]
 source <- sort(unique(dt$SOURCE))
 dt$SPREAD = dt$ASK_PRICE - dt$BID_PRICE
+
 
 # Shiny server 
 shinyServer(function(input, output, session) {
@@ -53,21 +55,21 @@ shinyServer(function(input, output, session) {
     
     # Render Plots
     # Ask and bid by Bank
-    output$bidAsk <- renderPlot({
-        plot_bid_ask_by_bank(
-            dt = dt.agg() %>% select(SOURCE, FEED_TIME, ASK_PRICE, BID_PRICE),
-            dom = "bidAsk",
+    output$Ask <- renderPlot({
+        plot_ask_by_bank(
+            dt = dt.agg() %>% select(SOURCE, FEED_TIME, ASK_PRICE),
+            dom = "Ask",
             yAxisLabel = "Prices",
             desc = TRUE
         )
         })
     
     # Ask and Bid size by bank
-    output$bidSizeAskSize <- renderPlot({
-        plot_size_by_bank(
-            dt = dt.agg() %>% select(SOURCE, FEED_TIME, ASK_SIZE, BID_SIZE),
-            dom = "bidSizeAskSize",
-            yAxisLabel = "Size of Ask and Bid",
+    output$Bid <- renderPlot({
+        plot_bid_by_bank(
+            dt = dt.agg() %>% select(SOURCE, FEED_TIME, BID_PRICE),
+            dom = "Bid",
+            yAxisLabel = "Price",
             desc= TRUE
         )
     })

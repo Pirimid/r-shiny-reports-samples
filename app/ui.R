@@ -16,7 +16,7 @@ shinyUI(
                     tabsetPanel(
                         
                         # Data by 
-                        tabPanel(p(icon("table"), "By Currency"),
+                        tabPanel(p(icon("line-chart"), "By Currency"),
                             column(3,
                                 wellPanel(
                                     radioButtons(
@@ -26,11 +26,10 @@ shinyUI(
                                 )
                             ),
                             column(7,
-                                    p(icon("line-chart"), "By Bank"),
-                                    h4('Bid and Ask', align = "center"),
-                                    plotOutput("bidAsk"),
-                                    h4('Bid Size and Ask Size', align = "center"),
-                                    plotOutput("bidSizeAskSize"),
+                                    h4('Ask Price', align = "center"),
+                                    plotOutput("Ask"),
+                                    h4('Bid Price', align = "center"),
+                                    plotOutput("Bid"),
                                     h4('Spread', align = "center"),
                                     plotOutput("spread")
                             )
