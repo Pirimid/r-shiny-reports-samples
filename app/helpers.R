@@ -48,13 +48,13 @@ filter_size_data <- function(dt, category) {
 #' @return plot
 #' 
 plot_prices_by_bank <- function(dt, dom, yAxisLabel, desc = FALSE) {
-    molted = melt(dt, id=c("FEED_TIME", "SOURCE")) %>% arrange(FEED_TIME, if (desc) { desc(variable) } else { variable })
+    molted = melt(dt, id=c("FEED_TIME", "SOURCE"), value.name = "Price") %>% arrange(FEED_TIME, if (desc) { desc(variable) } else { variable })
     molted$variable <- as.character(molted$variable)
     molted$SOURCE <- as.character(molted$SOURCE)
     molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%H:%M:%S")
 
     bidAsk <- ggplot(data=molted,
-             aes(x=FEED_TIME, y=value, colour=SOURCE, group=SOURCE)) + geom_line() + 
+             aes(x=FEED_TIME, y=Price, colour=SOURCE)) + geom_line() + 
               xlab("Date") + ylab("Prices") + theme(axis.text.y  = element_text(size=12),
                                               axis.title.y  = element_text(size=12),
                                               axis.text.x  = element_text(size=12, angle=45, hjust=1),
@@ -71,13 +71,14 @@ plot_prices_by_bank <- function(dt, dom, yAxisLabel, desc = FALSE) {
 #' @return plot
 
 plot_size_by_bank <- function(dt, dom, yAxisLabel, desc = FALSE) {
-    molted = melt(dt, id=c("FEED_TIME", "SOURCE")) %>% arrange(FEED_TIME, if (desc) { desc(variable) } else { variable })
+    molted = melt(dt, id=c("FEED_TIME", "SOURCE"), value.name = "Size") %>% arrange(FEED_TIME, if (desc) { desc(variable) } else { variable })
     molted$variable <- as.character(molted$variable)
     molted$SOURCE <- as.character(molted$SOURCE)
-    molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%H:%M:%S")
+    molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%H:%M:%S") 
+    molted$Size = molted$Size / 1000000.0
 
     bidSizeAskSize <- ggplot(data=molted,
-             aes(x=FEED_TIME, y=value/1000000, colour=SOURCE, group=SOURCE)) + geom_line() + 
+             aes(x=FEED_TIME, y=Size, colour=SOURCE)) + geom_line() + 
               xlab("Date") + ylab("Size (In millions)") + theme(axis.text.y  = element_text(size=12),
                                               axis.title.y  = element_text(size=12),
                                               axis.text.x  = element_text(size=12, angle=45, hjust=1),
@@ -94,13 +95,13 @@ plot_size_by_bank <- function(dt, dom, yAxisLabel, desc = FALSE) {
 #' @return plot
 
 plot_spread_by_bank <- function(dt, dom, yAxisLabel, desc = FALSE) {
-    molted = melt(dt, id=c("FEED_TIME", "SOURCE")) %>% arrange(FEED_TIME, if (desc) { desc(variable) } else { variable })
+    molted = melt(dt, id=c("FEED_TIME", "SOURCE"), value.name = "Spread") %>% arrange(FEED_TIME, if (desc) { desc(variable) } else { variable })
     molted$variable <- as.character(molted$variable)
     molted$SOURCE <- as.character(molted$SOURCE)
     molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%H:%M:%S")
 
     spread <- ggplot(data=molted,
-             aes(x=FEED_TIME, y=value, colour=SOURCE, group=SOURCE)) + geom_line() + 
+             aes(x=FEED_TIME, y=Spread, colour=SOURCE)) + geom_line() + 
               xlab("Date") + ylab("Spread") + theme(axis.text.y  = element_text(size=12),
                                               axis.title.y  = element_text(size=12),
                                               axis.text.x  = element_text(size=12, angle=45, hjust=1),
