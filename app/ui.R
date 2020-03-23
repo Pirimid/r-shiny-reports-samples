@@ -10,23 +10,19 @@ shinyUI(
                  sidebarPanel(
                     uiOutput("selectSource"),
                     actionButton(inputId = "clear_all", label = "Clear selection", icon = icon("check-square")),
-                    actionButton(inputId = "select_all", label = "Select all", icon = icon("check-square-o"))
+                    actionButton(inputId = "select_all", label = "Select all", icon = icon("check-square-o")),
+                    div(style = "padding: 10px 0px; margin:10px", fluidRow(
+                        radioButtons("askBid",
+                                "Type",
+                                c("ASK" = "ASK", "BID" = "BID"))
+                    ))
                 ),
   
                 mainPanel(
-                    tabsetPanel(
-                        
+                    tabsetPanel( 
                         # Data by 
                         tabPanel(p(icon("line-chart"), "By Currency"),
-                            column(3,
-                                wellPanel(
-                                    radioButtons(
-                                        "askBid",
-                                        "Type",
-                                        c("ASK" = "ASK", "BID" = "BID"))
-                                )
-                            ),
-                            column(7,
+                            column(10,
                                     h4('Ask or Bid Price', align = "center"),
                                     plotlyOutput("prices"),
                                     h4('Ask or Bid Size', align = "center"),

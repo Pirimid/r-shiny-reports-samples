@@ -55,11 +55,15 @@ plot_prices_by_bank <- function(dt, dom, yAxisLabel, desc = FALSE) {
 
     bidAsk <- ggplot(data=molted,
              aes(x=FEED_TIME, y=Price, colour=SOURCE)) + geom_line() + 
-              xlab("Date") + ylab("Prices") + theme(axis.text.y  = element_text(size=12),
-                                              axis.title.y  = element_text(size=12),
-                                              axis.text.x  = element_text(size=12, angle=45, hjust=1),
-                                              axis.title.x  = element_text(size=12))
-    bidAsk
+              xlab("Date") + ylab("Prices") + theme(legend.title = element_blank(),
+                                            axis.text.y  = element_text(size=12),
+                                            axis.title.y  = element_text(size=12),
+                                            axis.text.x  = element_text(size=12, angle=45, hjust=1),
+                                            axis.title.x  = element_text(size=12),)
+    bidAsk <- ggplotly(bidAsk) %>% config(displaylogo = FALSE) %>% add_annotations( text="Banks", xref="paper", yref="paper",
+                  x=1.02, xanchor="left",
+                  y=0.8, yanchor="bottom",    # Same y as legend below
+                  legendtitle=TRUE, showarrow=FALSE ) %>% layout( legend=list(y=0.8, yanchor="top" ) )
     }
 
 #' Prepare plot of size of ask or bid by bank
@@ -79,11 +83,16 @@ plot_size_by_bank <- function(dt, dom, yAxisLabel, desc = FALSE) {
 
     bidSizeAskSize <- ggplot(data=molted,
              aes(x=FEED_TIME, y=Size, colour=SOURCE)) + geom_line() + 
-              xlab("Date") + ylab("Size (In millions)") + theme(axis.text.y  = element_text(size=12),
-                                              axis.title.y  = element_text(size=12),
-                                              axis.text.x  = element_text(size=12, angle=45, hjust=1),
-                                              axis.title.x  = element_text(size=12))
-    bidSizeAskSize
+              xlab("Date") + ylab("Size (In millions)") + theme(legend.title = element_blank(),
+                                            axis.text.y  = element_text(size=12),
+                                            axis.title.y  = element_text(size=12),
+                                            axis.text.x  = element_text(size=12, angle=45, hjust=1),
+                                            axis.title.x  = element_text(size=12))
+    bidSizeAskSize <- ggplotly(bidSizeAskSize) %>% config(displaylogo = FALSE) %>% add_annotations( 
+                text="Banks", xref="paper", yref="paper",
+                x=1.02, xanchor="left",
+                y=0.8, yanchor="bottom",    # Same y as legend below
+                legendtitle=TRUE, showarrow=FALSE ) %>% layout( legend=list(y=0.8, yanchor="top" ) )
     }
 
 #' Prepare plot spread
@@ -102,11 +111,15 @@ plot_spread_by_bank <- function(dt, dom, yAxisLabel, desc = FALSE) {
 
     spread <- ggplot(data=molted,
              aes(x=FEED_TIME, y=Spread, colour=SOURCE)) + geom_line() + 
-              xlab("Date") + ylab("Spread") + theme(axis.text.y  = element_text(size=12),
-                                              axis.title.y  = element_text(size=12),
-                                              axis.text.x  = element_text(size=12, angle=45, hjust=1),
-                                              axis.title.x  = element_text(size=12))
-    spread
+              xlab("Date") + ylab("Spread") + theme(legend.title = element_blank(),
+                                            axis.text.y  = element_text(size=12),
+                                            axis.title.y  = element_text(size=12),
+                                            axis.text.x  = element_text(size=12, angle=45, hjust=1),
+                                            axis.title.x  = element_text(size=12))
+    spread <- ggplotly(spread) %>% config(displaylogo = FALSE) %>% add_annotations( text="Banks", xref="paper", yref="paper",
+                x=1.02, xanchor="left",
+                y=0.8, yanchor="bottom",    # Same y as legend below
+                legendtitle=TRUE, showarrow=FALSE ) %>% layout( legend=list(y=0.8, yanchor="top" ) )
     }
 
 #' Prepare dataset for showcase
