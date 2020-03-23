@@ -12,17 +12,17 @@ The demo of the app can be found [here](https://pirimiddemo.shinyapps.io/fx_spre
 
 1. Panel
 
-    ![Panel](/resources/panel.PNG)
+    ![Panel](/resources/dashboard.PNG)
 
 2. Sample Graphs
 
-    ![Graphs Sample](/resources/sample_graphs.PNG)
+    ![Graphs Sample](/resources/sample_graph.PNG)
 
-    ![Spread](/resources/spread.PNG)
+    ![Spread](/resources/spread_graph.PNG)
 
 3. Filters
 
-    ![Filters](/resources/filters.PNG)
+    ![Filters](/resources/filter.PNG)
 
 
 Contact us for more such dashboard. 
