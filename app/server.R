@@ -20,9 +20,9 @@ source("helpers.R", local = TRUE)
 
 # Load data
 dt <- fread('data/fx_data.csv')
+dt$SOURCE <- sub("*FX", "", as.character(dt$SOURCE))
 dt <- dt %>% group_by(SOURCE, FEED_TIME)
 dt <- dt[!duplicated(dt[,c('FEED_TIME')]),]
-# dt <- dt[dt$SOURCE != "JPMCFX"]
 source <- sort(unique(dt$SOURCE))
 dt$SPREAD = dt$ASK_PRICE - dt$BID_PRICE
 
