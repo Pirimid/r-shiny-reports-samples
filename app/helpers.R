@@ -1,4 +1,8 @@
 library(ggplot2)
+# Data processing libraries
+library(reshape2)
+library(dplyr)
+library(qwraps2)
 
 #' Aggregate dataset by Banks
 #' 
@@ -51,10 +55,10 @@ plot_prices_by_bank <- function(dt, dom, yAxisLabel, desc = FALSE) {
 
     bidAsk <- ggplot(data=molted,
              aes(x=FEED_TIME, y=value, colour=SOURCE, group=SOURCE)) + geom_line() + 
-              xlab("Date") + ylab("Prices") + theme(axis.text.y  = element_text(size=20),
-                                              axis.title.y  = element_text(size=28),
-                                              axis.text.x  = element_text(size=20, angle=45, hjust=1),
-                                              axis.title.x  = element_text(size=26))
+              xlab("Date") + ylab("Prices") + theme(axis.text.y  = element_text(size=12),
+                                              axis.title.y  = element_text(size=12),
+                                              axis.text.x  = element_text(size=12, angle=45, hjust=1),
+                                              axis.title.x  = element_text(size=12))
     bidAsk
     }
 
@@ -74,10 +78,10 @@ plot_size_by_bank <- function(dt, dom, yAxisLabel, desc = FALSE) {
 
     bidSizeAskSize <- ggplot(data=molted,
              aes(x=FEED_TIME, y=value/1000000, colour=SOURCE, group=SOURCE)) + geom_line() + 
-              xlab("Date") + ylab("Size (In millions)") + theme(axis.text.y  = element_text(size=20),
-                                              axis.title.y  = element_text(size=28),
-                                              axis.text.x  = element_text(size=20, angle=45, hjust=1),
-                                              axis.title.x  = element_text(size=26))
+              xlab("Date") + ylab("Size (In millions)") + theme(axis.text.y  = element_text(size=12),
+                                              axis.title.y  = element_text(size=12),
+                                              axis.text.x  = element_text(size=12, angle=45, hjust=1),
+                                              axis.title.x  = element_text(size=12))
     bidSizeAskSize
     }
 
@@ -97,20 +101,22 @@ plot_spread_by_bank <- function(dt, dom, yAxisLabel, desc = FALSE) {
 
     spread <- ggplot(data=molted,
              aes(x=FEED_TIME, y=value, colour=SOURCE, group=SOURCE)) + geom_line() + 
-              xlab("Date") + ylab("Spread") + theme(axis.text.y  = element_text(size=20),
-                                              axis.title.y  = element_text(size=28),
-                                              axis.text.x  = element_text(size=20, angle=45, hjust=1),
-                                              axis.title.x  = element_text(size=26))
+              xlab("Date") + ylab("Spread") + theme(axis.text.y  = element_text(size=12),
+                                              axis.title.y  = element_text(size=12),
+                                              axis.text.x  = element_text(size=12, angle=45, hjust=1),
+                                              axis.title.x  = element_text(size=12))
     spread
     }
 
-#' Prepare dataset for downloads
+#' Prepare dataset for showcase
 #'
 #' @param dt data.table
 #' @return data.table
-prepare_downolads <- function(dt, selectSource) {
+prepare_summary <- function(dt) {
     banks <- data.table(SOURCE=sort(unique(dt$SOURCE)))
     aggregated <- dt %>% group_by(SOURCE) 
-    data <- left_join(banks,  aggregated, by= "SOURCE") %>% filter(SOURCE==selectSource)
+    # summarise(aggregated, )
+    data <- left_join(banks,  aggregated, by= "SOURCE")
+    # sapply(data, summary)
     data
 }

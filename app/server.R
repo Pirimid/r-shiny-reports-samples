@@ -54,6 +54,11 @@ shinyServer(function(input, output, session) {
         aggregate_by_banks(dt, input$selectSource)
     })
     
+    # Prepare dataset to show summary
+    dataTable <- reactive({
+        prepare_summary(dt.agg() %>% select(SOURCE, FEED_TIME, ASK_PRICE, BID_PRICE, ASK_SIZE, BID_SIZE, SPREAD, ASK_SPOT, BID_SPOT))
+    })
+
     # Render Plots
     # Ask or bid by Bank
     output$prices <- renderPlotly({
@@ -84,5 +89,8 @@ shinyServer(function(input, output, session) {
             desc= TRUE
         )
     })
-    
+
+    output$summary <- DT::renderDataTable(
+        {dataTable()}, options = list(bFilter = FALSE, iDisplayLength = 50))
+     
 })

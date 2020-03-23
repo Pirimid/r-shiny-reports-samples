@@ -38,7 +38,8 @@ shinyUI(
                         # Data 
                         tabPanel(p(icon("table"), "Data"),
                             mainPanel(
-                                includeMarkdown("download.md")
+                                includeMarkdown("download.md"),
+                                DT::dataTableOutput("summary")
                             )
                         )
                     )
