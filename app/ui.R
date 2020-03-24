@@ -21,10 +21,15 @@ shinyUI(
                         radioButtons("askBid",
                                 "Type",
                                 c("ASK" = "ASK", "BID" = "BID"))
-                    ))
+                    )), width=2
                 ),
   
                 mainPanel(
+                    tags$head(
+                        tags$style(
+                            "body {overflow-y: visible;}"
+                            )
+                            ),
                     tabsetPanel( 
                         # Data by 
                         tabPanel(p(icon("line-chart"), "Charts"),
@@ -38,14 +43,18 @@ shinyUI(
                                     br(),
                                     br(),
                                     h4('Spread', align = "center"),
-                                    plotlyOutput("spread")
+                                    plotlyOutput("spread"),
+                                    style = "height:1000px; width:1000px"
                             )
                         ),
                         # Data 
                         tabPanel(p(icon("table"), "Data"),
                             mainPanel(
-                                includeMarkdown("download.md"),
-                                DT::dataTableOutput("summary")
+                                column(width=12,
+                                    includeMarkdown("download.md"),
+                                    DT::dataTableOutput("summary", ),
+                                    style = "height:1000px; width:1200px"
+                                )
                             )
                         )
                     )
