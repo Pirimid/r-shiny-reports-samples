@@ -92,5 +92,25 @@ shinyServer(function(input, output, session) {
 
     output$summary <- DT::renderDataTable(
         {dataTable()}, options = list(bFilter = FALSE, iDisplayLength = 50))
+    
+    # Histogram of size
+    output$sizeFreq <- renderPlotly({
+        plot_size_histograms(
+            dt = filter_size_data(dt.agg() %>% select(SOURCE, FEED_TIME, ASK_SIZE, BID_SIZE), input$askBid),
+            dom = "sizeFreq",
+            yAxisLabel = "Size",
+            desc= TRUE
+        )
+    })
+
+    # # Boxplots of size
+    # output$sizeBox <- renderPlotly({
+    #     plot_size_boxplot(
+    #         dt = filter_size_data(dt.agg() %>% select(SOURCE, FEED_TIME, ASK_SIZE, BID_SIZE), input$askBid),
+    #         dom = "sizeBox",
+    #         yAxisLabel = "Frequency",
+    #         desc= TRUE
+    #     )
+    # })
      
 })

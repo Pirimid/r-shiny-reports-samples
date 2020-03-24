@@ -31,8 +31,8 @@ shinyUI(
                             )
                             ),
                     tabsetPanel( 
-                        # Data by 
-                        tabPanel(p(icon("line-chart"), "Charts"),
+                        # Line Charts 
+                        tabPanel(p(icon("line-chart"), "Line Charts"),
                             column(10,
                                     h4('Ask or Bid Price', align = "center"),
                                     plotlyOutput("prices"),
@@ -44,6 +44,16 @@ shinyUI(
                                     br(),
                                     h4('Spread', align = "center"),
                                     plotlyOutput("spread"),
+                                    style = "height:1000px; width:1000px"
+                            )
+                        ),
+                        # Histograms
+                        tabPanel(p(icon("line-chart"), "Histogram Charts"),
+                            column(10,
+                                    h4('Size Histogram', align = "center"),
+                                    plotlyOutput("sizeFreq"),
+                                    # h4('Size Boxplot', align = "center"),
+                                    # plotlyOutput("sizeBox"),
                                     style = "height:1000px; width:1000px"
                             )
                         ),
