@@ -50,7 +50,7 @@ shinyUI(
                         # Histograms
                         tabPanel(p(icon("line-chart"), "Histogram Charts"),
                             column(10,
-                                    h4('Size Histogram', align = "center"),
+                                    h4('Histogram', align = "center"),
                                     plotlyOutput("sizeFreq"),
                                     # h4('Size Boxplot', align = "center"),
                                     # plotlyOutput("sizeBox"),
