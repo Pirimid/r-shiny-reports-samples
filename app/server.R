@@ -39,14 +39,17 @@ shinyServer(function(input, output, session) {
     })
     
     # Add observers on clear and select all buttons
-    observe({
-        if(input$clear_all == 0) return()
+    observeEvent(input$clear_all,{
         values$source <- c()
+        output$selectSource <- renderUI({
+        checkboxGroupInput('selectSource', 'Banks', choices=source, selected=values$source)
+    })
     })
     
-    observe({
-        if(input$select_all == 0) return()
-        values$source <- source
+    observeEvent(input$select_all,{
+        output$selectSource <- renderUI({
+        checkboxGroupInput('selectSource', 'Banks', choices=source, selected=source)
+    })
     })
 
     # Preapre datasets

@@ -4,4 +4,4 @@ In the dashboard, we are showing what is the `ASK` and `BID` prices and sizes fo
 
 
 
-Contact us for more such dashboard.  
+Contact us for more details.  
