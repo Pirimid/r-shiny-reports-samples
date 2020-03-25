@@ -12,7 +12,7 @@ The demo of the app can be found [here](https://pirimiddemo.shinyapps.io/fx_spre
 
 1. Panel
 
-    ![Panel](/resources/panel.PNG)
+    ![Panel](/resources/panel.png)
 
 2. Price Charts
 
