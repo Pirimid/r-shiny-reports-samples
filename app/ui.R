@@ -1,6 +1,4 @@
 library(shiny)
-
-# Fix tag("div", list(...)) : could not find function "showOut… 
 library(rCharts)
 library(plotly)
 

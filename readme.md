@@ -12,17 +12,23 @@ The demo of the app can be found [here](https://pirimiddemo.shinyapps.io/fx_spre
 
 1. Panel
 
-    ![Panel](/resources/dashboard.PNG)
+    ![Panel](/resources/panel_new.PNG)
 
-2. Sample Graphs
+2. Price Charts
 
-    ![Graphs Sample](/resources/sample_graph.PNG)
-
-    ![Spread](/resources/spread_graph.PNG)
+    ![Graphs Sample](/resources/sample_graphs_prices.PNG)
 
 3. Filters
 
     ![Filters](/resources/filter.PNG)
+
+4. Spread Analysis
+
+    ![Spread_line](/resources/spread_line.PNG)
+
+    ![Spread_hist](/resources/spread_hist.png)
+
+    ![Spread_box](/resources/spread_box.png)
 
 
 Contact us for more such dashboard. 
