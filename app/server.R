@@ -22,9 +22,9 @@ source("helpers.R", local = TRUE)
 dt <- fread('data/fx_data.csv')
 dt$SOURCE <- sub("*FX", "", as.character(dt$SOURCE))
 dt <- dt %>% group_by(SOURCE, FEED_TIME)
+dt$SPREAD = dt$ASK_PRICE - dt$BID_PRICE
 dt <- dt[!duplicated(dt[,c('FEED_TIME')]),]
 source <- sort(unique(dt$SOURCE))
-dt$SPREAD = dt$ASK_PRICE - dt$BID_PRICE
 
 
 # Shiny server 
@@ -53,7 +53,7 @@ shinyServer(function(input, output, session) {
     dt.agg <- reactive({
         aggregate_by_banks(dt, input$selectSource)
     })
-    
+
     # Prepare dataset to show summary
     dataTable <- reactive({
         prepare_summary(dt.agg() %>% select(SOURCE, FEED_TIME, ASK_PRICE, BID_PRICE, ASK_SIZE, BID_SIZE, SPREAD, ASK_SPOT, BID_SPOT))
@@ -94,23 +94,23 @@ shinyServer(function(input, output, session) {
         {dataTable()}, options = list(bFilter = FALSE, iDisplayLength = 50))
     
     # Histogram of size
-    output$sizeFreq <- renderPlotly({
-        plot_size_histograms(
-            dt = filter_size_data(dt.agg() %>% select(SOURCE, FEED_TIME, ASK_SIZE, BID_SIZE), input$askBid),
-            dom = "sizeFreq",
-            yAxisLabel = "Size",
+    output$spreadFreq <- renderPlotly({
+        plot_spread_histograms(
+            dt = dt.agg() %>% select(SOURCE, FEED_TIME, SPREAD),
+            dom = "spreadFreq",
+            yAxisLabel = "Spread",
             desc= TRUE
         )
     })
 
-    # # Boxplots of size
-    # output$sizeBox <- renderPlotly({
-    #     plot_size_boxplot(
-    #         dt = filter_size_data(dt.agg() %>% select(SOURCE, FEED_TIME, ASK_SIZE, BID_SIZE), input$askBid),
-    #         dom = "sizeBox",
-    #         yAxisLabel = "Frequency",
-    #         desc= TRUE
-    #     )
-    # })
+    # Boxplots of size
+    output$spreadBox <- renderPlotly({
+        plot_spread_boxplot(
+            dt = dt.agg() %>% select(SOURCE, FEED_TIME, SPREAD),
+            dom = "spreadBox",
+            yAxisLabel = "Spread",
+            desc= TRUE
+        )
+    })
      
 })

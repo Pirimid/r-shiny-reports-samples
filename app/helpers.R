@@ -143,18 +143,17 @@ prepare_summary <- function(dt) {
 #' @param desc
 #' @return plot
 
-plot_size_histograms <- function(dt, dom, yAxisLabel, desc = FALSE) {
-    molted = melt(dt, id=c("FEED_TIME", "SOURCE"), value.name = "Size") %>% arrange(FEED_TIME, if (desc) { desc(variable) } else { variable })
+plot_spread_histograms <- function(dt, dom, yAxisLabel, desc = FALSE) {
+    molted = melt(dt, id=c("FEED_TIME", "SOURCE"), value.name = "Spread") %>% arrange(FEED_TIME, if (desc) { desc(variable) } else { variable })
     molted$variable <- as.character(molted$variable)
     molted$SOURCE <- as.character(molted$SOURCE)
     molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%H:%M:%S") 
-    molted$Size = molted$Size / 1000000.0
 
     bar_width <- 5
     histSize <- ggplot(data=molted,
-            aes(x=FEED_TIME, y=Size, colour=SOURCE)) + 
+            aes(x=FEED_TIME, y=Spread, colour=SOURCE)) + 
             geom_bar(position="identity", stat="identity", width=bar_width) + 
-            xlab("Date") + ylab("Size (In millions)") + theme(legend.title = element_blank(),
+            xlab("Date") + ylab("Spread") + theme(legend.title = element_blank(),
                                             axis.text.y  = element_text(size=12),
                                             axis.title.y  = element_text(size=12),
                                             axis.text.x  = element_text(size=12, angle=45, hjust=1),
@@ -174,24 +173,23 @@ plot_size_histograms <- function(dt, dom, yAxisLabel, desc = FALSE) {
 #' @param desc
 #' @return plot
 
-# plot_size_boxplot <- function(dt, dom, yAxisLabel, desc = FALSE) {
-#     molted = melt(dt, id=c("FEED_TIME", "SOURCE"), value.name = "Size") %>% arrange(FEED_TIME, if (desc) { desc(variable) } else { variable })
-#     molted$variable <- as.character(molted$variable)
-#     molted$SOURCE <- as.character(molted$SOURCE)
-#     molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%H:%M:%S") 
-#     molted$Size = molted$Size / 1000000.0
+plot_spread_boxplot <- function(dt, dom, yAxisLabel, desc = FALSE) {
+    molted = melt(dt, id=c("FEED_TIME", "SOURCE"), value.name = "Spread") %>% arrange(FEED_TIME, if (desc) { desc(variable) } else { variable })
+    molted$variable <- as.character(molted$variable)
+    molted$SOURCE <- as.character(molted$SOURCE)
+    molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%H:%M:%S") 
 
-#     bidSizeAskSize <- ggplot(data=molted,
-#             aes(x=FEED_TIME, y=Size, colour=SOURCE)) + 
-#             geom_boxplot() + 
-#             xlab("Date") + ylab("Size (In millions)") + theme(legend.title = element_blank(),
-#                                             axis.text.y  = element_text(size=12),
-#                                             axis.title.y  = element_text(size=12),
-#                                             axis.text.x  = element_text(size=12, angle=45, hjust=1),
-#                                             axis.title.x  = element_text(size=12))
-#     bidSizeAskSize <- ggplotly(bidSizeAskSize) %>% add_annotations( 
-#                 text="Banks", xref="paper", yref="paper",
-#                 x=1.02, xanchor="left",
-#                 y=0.8, yanchor="bottom",    # Same y as legend below
-#                 legendtitle=TRUE, showarrow=FALSE ) %>% layout( legend=list(y=0.8, yanchor="top" ) )
-#     }
+    p <- ggplot(data=molted, aes(x=factor(SOURCE), y=Spread, colour=SOURCE))
+
+    boxPlot <- p + geom_boxplot(notch = TRUE) +  ylab("Spread") + 
+            xlab("BANKS") +  theme(legend.title = element_blank(),
+                                            axis.text.y  = element_text(size=12),
+                                            axis.title.y  = element_text(size=12),
+                                            axis.text.x  = element_text(size=12, angle=45, hjust=1),
+                                            axis.title.x  = element_text(size=12))
+    boxPlot <- ggplotly(boxPlot) %>% add_annotations( 
+                text="Banks", xref="paper", yref="paper",
+                x=1.02, xanchor="left",
+                y=0.8, yanchor="bottom",    # Same y as legend below
+                legendtitle=TRUE, showarrow=FALSE ) %>% layout( legend=list(y=0.8, yanchor="top" ) )
+    }
