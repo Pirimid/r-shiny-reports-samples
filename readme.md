@@ -30,5 +30,9 @@ The demo of the app can be found [here](https://pirimiddemo.shinyapps.io/fx_spre
 
     ![Spread_box](/resources/spread_box.png)
 
+5. Volume Analysis
 
-Contact us for more such dashboard. 
+    ![volume_hist](/resources/volume_analysis.png)
+
+
+Contact us for more details. 
