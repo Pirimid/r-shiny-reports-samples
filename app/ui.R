@@ -57,6 +57,21 @@ shinyUI(
                                     style = "height:1000px; width:1000px"
                             )
                         ),
+                        # Histograms Size
+                        tabPanel(p(icon("line-chart"), "Volume Analysis"),
+                            fluidRow(sliderInput(inputId = "bins",
+                                                label = "Number of Bins:",
+                                                min = 1,
+                                                max = 10,
+                                                value = 6),
+                                column(6, align="center",
+                                    plotOutput("histAskSize")
+                                ),
+                                column(6, align="center",
+                                    plotOutput("histBidSize")
+                                )
+                            )
+                        ),
                         # Data 
                         tabPanel(p(icon("table"), "Data"),
                             mainPanel(

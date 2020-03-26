@@ -68,7 +68,6 @@ shinyServer(function(input, output, session) {
         plot_prices_by_bank(
             dt =  filter_price_data(dt.agg() %>% select(SOURCE, FEED_TIME, ASK_PRICE, BID_PRICE), input$askBid),
             dom = "prices",
-            yAxisLabel = "Prices",
             desc = TRUE
         )
         })
@@ -78,7 +77,6 @@ shinyServer(function(input, output, session) {
         plot_size_by_bank(
             dt = filter_size_data(dt.agg() %>% select(SOURCE, FEED_TIME, ASK_SIZE, BID_SIZE), input$askBid),
             dom = "size",
-            yAxisLabel = "Size",
             desc= TRUE
         )
     })
@@ -88,7 +86,6 @@ shinyServer(function(input, output, session) {
         plot_spread_by_bank(
             dt = dt.agg() %>% select(SOURCE, FEED_TIME, SPREAD),
             dom = "spread",
-            yAxisLabel = "Spread",
             desc= TRUE
         )
     })
@@ -101,7 +98,6 @@ shinyServer(function(input, output, session) {
         plot_spread_histograms(
             dt = dt.agg() %>% select(SOURCE, FEED_TIME, SPREAD),
             dom = "spreadFreq",
-            yAxisLabel = "Spread",
             desc= TRUE
         )
     })
@@ -111,9 +107,30 @@ shinyServer(function(input, output, session) {
         plot_spread_boxplot(
             dt = dt.agg() %>% select(SOURCE, FEED_TIME, SPREAD),
             dom = "spreadBox",
-            yAxisLabel = "Spread",
             desc= TRUE
         )
+    })
+
+    # Histogram of ASK size
+    output$histAskSize <- renderPlot ({
+            dt = dt.agg() %>% select(SOURCE, FEED_TIME, ASK_SIZE) 
+            x <- dt$ASK_SIZE / 1000000
+            x <- as.numeric(unlist(x))
+            bins <- seq(min(x), max(x), length.out = input$bins + 1)
+            hist(x, breaks = bins, col = "#75AADB", border = "white",
+                    xlab = "Total ASK Size (In millions)",
+                    main = "Frequency of ASK Size")
+    })
+
+    # Boxplots of size
+    output$histBidSize <- renderPlot ({
+            dt = dt.agg() %>% select(SOURCE, FEED_TIME, BID_SIZE) 
+            x <- dt$BID_SIZE / 1000000
+            x <- as.numeric(unlist(x))
+            bins <- seq(min(x), max(x), length.out = input$bins + 1)
+            hist(x, breaks = bins, col = "#75AADB", border = "white",
+                    xlab = "Total BID Size (In millions)",
+                    main = "Frequency of BID Size")
     })
      
 })
