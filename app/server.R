@@ -1,4 +1,5 @@
 library(shiny)
+library(shinyjs)
 
 # Plotting 
 library(ggplot2)
@@ -38,6 +39,15 @@ shinyServer(function(input, output, session) {
         checkboxGroupInput('selectSource', 'Banks', choices=source, selected=values$source)
     })
     
+    observe({
+      validate(need(!is.null(input$tabset), ""))
+      if (input$tabset == 2 || input$tabset == 3 || input$tabset == 4) {
+          disable("radioButton")
+      } else {
+          enable("radioButton")
+      }
+    })
+
     # Add observers on clear and select all buttons
     observeEvent(input$clear_all,{
         values$source <- c()

@@ -1,6 +1,7 @@
 library(shiny)
 library(rCharts)
 library(plotly)
+library(shinyjs)
 
 shinyUI(
     navbarPage("FX Data Explorer",
@@ -15,7 +16,7 @@ shinyUI(
                         actionButton(inputId = "select_all", label = "Select all", icon = icon("check-square-o"),
                         style='padding:4px; width: 120px')
                         )),
-                    div(style = "padding: 10px 0px; margin:10px", fluidRow(
+                    div(id="radioButton", class="radioButton",style = "padding: 10px 0px; margin:10px", fluidRow(
                         radioButtons("askBid",
                                 "Type",
                                 c("ASK" = "ASK", "BID" = "BID"))
@@ -23,42 +24,40 @@ shinyUI(
                 ),
   
                 mainPanel(
+                    useShinyjs(),
                     tags$head(
                         tags$style(
                             "body {overflow-y: visible;}"
                             )
                             ),
-                    tabsetPanel( 
+                    tabsetPanel(id = "tabset", 
                         # Line Charts 
-                        tabPanel(p(icon("line-chart"), "Price Charts"),
+                        tabPanel(value=1, p(icon("line-chart"), "Price Charts"),
                             column(10,
                                     h4('Ask or Bid Price', align = "center"),
                                     plotlyOutput("prices"),
-                                    br(),
-                                    br(),
+                                    hr(color="black"),
                                     h4('Ask or Bid Size', align = "center"),
                                     plotlyOutput("size"),
-                                    br(),
-                                    br(),
+                                    hr(color="black"),
                                     h4('Spread', align = "center"),
                                     plotlyOutput("spread"),
                                     style = "height:1000px; width:1000px"
                             )
                         ),
                         # Histograms
-                        tabPanel(p(icon("line-chart"), "Spread Analysis"),
+                        tabPanel(value=2, p(icon("bar-chart-o"), "Spread Analysis"),
                             column(10,
                                     h4('Histogram', align = "center"),
                                     plotlyOutput("spreadFreq"),
-                                    br(),
-                                    br(),
+                                    hr(color="black"),
                                     h4('Boxplot', align = "center"),
                                     plotlyOutput("spreadBox"),
                                     style = "height:1000px; width:1000px"
                             )
                         ),
                         # Histograms Size
-                        tabPanel(p(icon("line-chart"), "Volume Analysis"),
+                        tabPanel(value=3, p(icon("bar-chart"), "Volume Analysis"),
                             fluidRow(sliderInput(inputId = "bins",
                                                 label = "Number of Bins:",
                                                 min = 1,
@@ -73,7 +72,7 @@ shinyUI(
                             )
                         ),
                         # Data 
-                        tabPanel(p(icon("table"), "Data"),
+                        tabPanel(value=4, p(icon("table"), "Data"),
                             mainPanel(
                                 column(width=12,
                                     includeMarkdown("download.md"),
