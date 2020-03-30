@@ -8,7 +8,7 @@ shinyUI(
         tabPanel("Visualization",
                  sidebarPanel(
                     div(fluidRow(
-                        actionButton(inputId = "select_all", label = "Select All Banks", icon = icon("check-square-o"),
+                        actionButton(inputId = "select_all", label = "Select All Banks",
                         style='padding:4px; width: 125px')
                         )),
                     uiOutput("selectSource"),
@@ -20,7 +20,17 @@ shinyUI(
                         radioButtons("askBid",
                                 "Type",
                                 c("ASK" = "ASK", "BID" = "BID"))
-                    )), width=2
+                    )),
+                    div(id="slider", class="slider", style="padding: 10px 0px; margin:10px", 
+                        fluidRow(
+                            sliderInput(inputId = "bins",
+                                                label = "Number of Bins:",
+                                                min = 1,
+                                                max = 10,
+                                                value = 6)
+                        )
+                    ),
+                    width=2
                 ),
   
                 mainPanel(
@@ -36,10 +46,10 @@ shinyUI(
                             column(10,
                                     h4('Ask or Bid Price', align = "center"),
                                     plotlyOutput("prices"),
-                                    hr(color="black"),
+                                    HTML('<hr style="border-color: black;">'),
                                     h4('Ask or Bid Size', align = "center"),
                                     plotlyOutput("size"),
-                                    hr(color="black"),
+                                    HTML('<hr style="border-color: black;">'),
                                     h4('Spread', align = "center"),
                                     plotlyOutput("spread"),
                                     style = "height:1000px; width:1000px"
@@ -50,7 +60,7 @@ shinyUI(
                             column(10,
                                     h4('Histogram', align = "center"),
                                     plotlyOutput("spreadFreq"),
-                                    hr(color="black"),
+                                    HTML('<hr style="border-color: black;">'),
                                     h4('Boxplot', align = "center"),
                                     plotlyOutput("spreadBox"),
                                     style = "height:1000px; width:1000px"
@@ -58,12 +68,7 @@ shinyUI(
                         ),
                         # Histograms Size
                         tabPanel(value=3, p(icon("bar-chart"), "Volume Analysis"),
-                            fluidRow(sliderInput(inputId = "bins",
-                                                label = "Number of Bins:",
-                                                min = 1,
-                                                max = 10,
-                                                value = 6),
-                                column(6, align="center",
+                            fluidRow(column(6, align="center",
                                     plotOutput("histAskSize")
                                 ),
                                 column(6, align="center",

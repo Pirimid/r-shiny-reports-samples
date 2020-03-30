@@ -46,6 +46,12 @@ shinyServer(function(input, output, session) {
       } else {
           enable("radioButton")
       }
+
+      if (input$tabset == 1 || input$tabset == 2 || input$tabset == 4){
+          disable("slider")
+      } else {
+          enable("slider")      
+      }
     })
 
     # Add observers on clear and select all buttons
