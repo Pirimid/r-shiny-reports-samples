@@ -12,7 +12,7 @@ The demo of the app can be found [here](https://pirimiddemo.shinyapps.io/fx_spre
 
 1. Panel
 
-    ![Panel](/resources/panel.png)
+    ![Panel](/resources/panel_new.png)
 
 2. Price Charts
 
@@ -20,7 +20,7 @@ The demo of the app can be found [here](https://pirimiddemo.shinyapps.io/fx_spre
 
 3. Filters
 
-    ![Filters](/resources/filter.PNG)
+    ![Filters](/resources/filters_panel.png)
 
 4. Spread Analysis
 
@@ -32,7 +32,7 @@ The demo of the app can be found [here](https://pirimiddemo.shinyapps.io/fx_spre
 
 5. Volume Analysis
 
-    ![volume_hist](/resources/volume_analysis.png)
+    ![volume_hist](/resources/volume_analytics.png)
 
 
 Contact us for more details. 
