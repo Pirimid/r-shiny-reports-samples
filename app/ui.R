@@ -7,15 +7,15 @@ shinyUI(
     navbarPage("FX Data Explorer",
         tabPanel("Visualization",
                  sidebarPanel(
-                    uiOutput("selectSource"),
                     div(fluidRow(
-                        actionButton(inputId = "clear_all", label = "Clear selection", icon = icon("check-square"),
-                        style='padding:4px; width: 120px')
-                    )),
-                    div(fluidRow(
-                        actionButton(inputId = "select_all", label = "Select all", icon = icon("check-square-o"),
-                        style='padding:4px; width: 120px')
+                        actionButton(inputId = "select_all", label = "Select All Banks", icon = icon("check-square-o"),
+                        style='padding:4px; width: 125px')
                         )),
+                    uiOutput("selectSource"),
+                    # div(fluidRow(
+                    #     actionButton(inputId = "clear_all", label = "Clear selection", icon = icon("check-square"),
+                    #     style='padding:4px; width: 120px')
+                    # )),
                     div(id="radioButton", class="radioButton",style = "padding: 10px 0px; margin:10px", fluidRow(
                         radioButtons("askBid",
                                 "Type",
