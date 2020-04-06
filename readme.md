@@ -12,11 +12,11 @@ The demo of the app can be found [here](https://pirimiddemo.shinyapps.io/fx_spre
 
 1. Panel
 
-    ![Panel](/resources/panel_new.png)
+    ![Panel](/resources/panel.png)
 
 2. Price Charts
 
-    ![Graphs Sample](/resources/sample_graphs_prices.PNG)
+    ![Graphs Sample](/resources/price_charts.png)
 
 3. Filters
 

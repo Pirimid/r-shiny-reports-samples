@@ -44,13 +44,13 @@ shinyUI(
                         # Line Charts 
                         tabPanel(value=1, p(icon("line-chart"), "Price Charts"),
                             column(10,
-                                    h4('Ask or Bid Price', align = "center"),
+                                    h4('Bid/Ask Over Time Period', align = "center"),
                                     plotlyOutput("prices"),
                                     HTML('<hr style="border-color: black;">'),
-                                    h4('Ask or Bid Size', align = "center"),
+                                    h4('Bid/Ask Size Over Time Period', align = "center"),
                                     plotlyOutput("size"),
                                     HTML('<hr style="border-color: black;">'),
-                                    h4('Spread', align = "center"),
+                                    h4('Bid/Ask Spread Over Time Period', align = "center"),
                                     plotlyOutput("spread"),
                                     style = "height:1000px; width:1000px"
                             )

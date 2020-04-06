@@ -54,7 +54,7 @@ plot_prices_by_bank <- function(dt, dom, desc = FALSE) {
 
     bidAsk <- ggplot(data=molted,
              aes(x=FEED_TIME, y=Price, colour=SOURCE)) + geom_line() + 
-              xlab("Date") + ylab("Prices") + theme(legend.title = element_blank(),
+              xlab("Time") + ylab("Prices") + theme(legend.title = element_blank(),
                                             axis.text.y  = element_text(size=12),
                                             axis.title.y  = element_text(size=12),
                                             axis.text.x  = element_text(size=12, angle=45, hjust=1),
@@ -81,7 +81,7 @@ plot_size_by_bank <- function(dt, dom, desc = FALSE) {
 
     bidSizeAskSize <- ggplot(data=molted,
              aes(x=FEED_TIME, y=Size, colour=SOURCE)) + geom_line() + 
-              xlab("Date") + ylab("Size (In millions)") + theme(legend.title = element_blank(),
+              xlab("Time") + ylab("Size (In millions)") + theme(legend.title = element_blank(),
                                             axis.text.y  = element_text(size=12),
                                             axis.title.y  = element_text(size=12),
                                             axis.text.x  = element_text(size=12, angle=45, hjust=1),
@@ -108,7 +108,7 @@ plot_spread_by_bank <- function(dt, dom, desc = FALSE) {
 
     spread <- ggplot(data=molted,
              aes(x=FEED_TIME, y=Spread, colour=SOURCE)) + geom_line() + 
-              xlab("Date") + ylab("Spread") + theme(legend.title = element_blank(),
+              xlab("Time") + ylab("Spread") + theme(legend.title = element_blank(),
                                             axis.text.y  = element_text(size=12),
                                             axis.title.y  = element_text(size=12),
                                             axis.text.x  = element_text(size=12, angle=45, hjust=1),
@@ -149,7 +149,7 @@ plot_spread_histograms <- function(dt, dom, desc = FALSE) {
     histSize <- ggplot(data=molted,
             aes(x=FEED_TIME, y=Spread, colour=SOURCE)) + 
             geom_bar(position="identity", stat="identity", width=bar_width) + 
-            xlab("Date") + ylab("Spread") + theme(legend.title = element_blank(),
+            xlab("Time") + ylab("Spread") + theme(legend.title = element_blank(),
                                             axis.text.y  = element_text(size=12),
                                             axis.title.y  = element_text(size=12),
                                             axis.text.x  = element_text(size=12, angle=45, hjust=1),
