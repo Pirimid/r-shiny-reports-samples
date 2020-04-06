@@ -1,4 +1,4 @@
-## FX-Data Visualization
+## Foreign Exchange (FX) Data Visualization
 
 This is sample project to visualize forex data using `Shiny` framework. Shiny is powerful tool and can be used to build many interactive visualization and applications. 
 
