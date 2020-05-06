@@ -5,14 +5,14 @@ library(dplyr)
 library(qwraps2)
 
 #' Aggregate dataset by Banks
-#' 
+#'
 #' @param dt data.table
 #' @param banks character vector
 #' @return data.table
 #'
 aggregate_by_banks <- function(dt, selectSource) {
     banks <- data.table(SOURCE=sort(unique(dt$SOURCE)))
-    aggregated <- dt %>% group_by(SOURCE) 
+    aggregated <- dt %>% group_by(SOURCE)
     data <- left_join(banks,  aggregated, by= "SOURCE") %>% filter(SOURCE==selectSource)
     data
 }
@@ -45,7 +45,7 @@ filter_size_data <- function(dt, category) {
 #' @param dom
 #' @param desc
 #' @return plot
-#' 
+#'
 plot_prices_by_bank <- function(dt, dom, desc = FALSE) {
     molted = melt(dt, id=c("FEED_TIME", "SOURCE"), value.name = "Price") %>% arrange(FEED_TIME, if (desc) { desc(variable) } else { variable })
     molted$variable <- as.character(molted$variable)
@@ -53,7 +53,7 @@ plot_prices_by_bank <- function(dt, dom, desc = FALSE) {
     molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%H:%M:%S")
 
     bidAsk <- ggplot(data=molted,
-             aes(x=FEED_TIME, y=Price, colour=SOURCE)) + geom_line() + 
+             aes(x=FEED_TIME, y=Price, colour=SOURCE)) + geom_line() +
               xlab("Time") + ylab("Prices") + theme(legend.title = element_blank(),
                                             axis.text.y  = element_text(size=12),
                                             axis.title.y  = element_text(size=12),
@@ -76,17 +76,17 @@ plot_size_by_bank <- function(dt, dom, desc = FALSE) {
     molted = melt(dt, id=c("FEED_TIME", "SOURCE"), value.name = "Size") %>% arrange(FEED_TIME, if (desc) { desc(variable) } else { variable })
     molted$variable <- as.character(molted$variable)
     molted$SOURCE <- as.character(molted$SOURCE)
-    molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%H:%M:%S") 
+    molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%H:%M:%S")
     molted$Size = molted$Size / 1000000.0
 
     bidSizeAskSize <- ggplot(data=molted,
-             aes(x=FEED_TIME, y=Size, colour=SOURCE)) + geom_line() + 
+             aes(x=FEED_TIME, y=Size, colour=SOURCE)) + geom_line() +
               xlab("Time") + ylab("Size (In millions)") + theme(legend.title = element_blank(),
                                             axis.text.y  = element_text(size=12),
                                             axis.title.y  = element_text(size=12),
                                             axis.text.x  = element_text(size=12, angle=45, hjust=1),
                                             axis.title.x  = element_text(size=12))
-    bidSizeAskSize <- ggplotly(bidSizeAskSize) %>% add_annotations( 
+    bidSizeAskSize <- ggplotly(bidSizeAskSize) %>% add_annotations(
                 text="Banks", xref="paper", yref="paper",
                 x=1.02, xanchor="left",
                 y=0.8, yanchor="bottom",    # Same y as legend below
@@ -107,7 +107,7 @@ plot_spread_by_bank <- function(dt, dom, desc = FALSE) {
     molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%H:%M:%S")
 
     spread <- ggplot(data=molted,
-             aes(x=FEED_TIME, y=Spread, colour=SOURCE)) + geom_line() + 
+             aes(x=FEED_TIME, y=Spread, colour=SOURCE)) + geom_line() +
               xlab("Time") + ylab("Spread") + theme(legend.title = element_blank(),
                                             axis.text.y  = element_text(size=12),
                                             axis.title.y  = element_text(size=12),
@@ -125,7 +125,7 @@ plot_spread_by_bank <- function(dt, dom, desc = FALSE) {
 #' @return data.table
 prepare_summary <- function(dt) {
     banks <- data.table(SOURCE=sort(unique(dt$SOURCE)))
-    aggregated <- dt %>% group_by(SOURCE) 
+    aggregated <- dt %>% group_by(SOURCE)
     # summarise(aggregated, )
     data <- left_join(banks,  aggregated, by= "SOURCE")
     # sapply(data, summary)
@@ -143,18 +143,18 @@ plot_spread_histograms <- function(dt, dom, desc = FALSE) {
     molted = melt(dt, id=c("FEED_TIME", "SOURCE"), value.name = "Spread") %>% arrange(FEED_TIME, if (desc) { desc(variable) } else { variable })
     molted$variable <- as.character(molted$variable)
     molted$SOURCE <- as.character(molted$SOURCE)
-    molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%H:%M:%S") 
+    molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%H:%M:%S")
 
     bar_width <- 5
     histSize <- ggplot(data=molted,
-            aes(x=FEED_TIME, y=Spread, colour=SOURCE)) + 
-            geom_bar(position="identity", stat="identity", width=bar_width) + 
+            aes(x=FEED_TIME, y=Spread, colour=SOURCE)) +
+            geom_bar(position="identity", stat="identity", width=bar_width) +
             xlab("Time") + ylab("Spread") + theme(legend.title = element_blank(),
                                             axis.text.y  = element_text(size=12),
                                             axis.title.y  = element_text(size=12),
                                             axis.text.x  = element_text(size=12, angle=45, hjust=1),
                                             axis.title.x  = element_text(size=12))
-    histSize <- ggplotly(histSize) %>% add_annotations( 
+    histSize <- ggplotly(histSize) %>% add_annotations(
                 text="Banks", xref="paper", yref="paper",
                 x=1.02, xanchor="left",
                 y=0.8, yanchor="bottom",    # Same y as legend below
@@ -172,17 +172,17 @@ plot_spread_boxplot <- function(dt, dom, desc = FALSE) {
     molted = melt(dt, id=c("FEED_TIME", "SOURCE"), value.name = "Spread") %>% arrange(FEED_TIME, if (desc) { desc(variable) } else { variable })
     molted$variable <- as.character(molted$variable)
     molted$SOURCE <- as.character(molted$SOURCE)
-    molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%H:%M:%S") 
+    molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%H:%M:%S")
 
     p <- ggplot(data=molted, aes(x=factor(SOURCE), y=Spread, colour=SOURCE))
 
-    boxPlot <- p + geom_boxplot(notch = TRUE) +  ylab("Spread") + 
+    boxPlot <- p + geom_boxplot(notch = TRUE) +  ylab("Spread") +
             xlab("BANKS") +  theme(legend.title = element_blank(),
                                             axis.text.y  = element_text(size=12),
                                             axis.title.y  = element_text(size=12),
                                             axis.text.x  = element_text(size=12, angle=45, hjust=1),
                                             axis.title.x  = element_text(size=12))
-    boxPlot <- ggplotly(boxPlot) %>% add_annotations( 
+    boxPlot <- ggplotly(boxPlot) %>% add_annotations(
                 text="Banks", xref="paper", yref="paper",
                 x=1.02, xanchor="left",
                 y=0.8, yanchor="bottom",    # Same y as legend below
@@ -193,18 +193,18 @@ plot_spread_boxplot <- function(dt, dom, desc = FALSE) {
 #     molted = melt(dt, id=c("FEED_TIME", "SOURCE"), value.name = "SIZE") %>% arrange(FEED_TIME, if (desc) { desc(variable) } else { variable })
 #     molted$variable <- as.character(molted$variable)
 #     molted$SOURCE <- as.character(molted$SOURCE)
-#     molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%H:%M:%S") 
+#     molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%H:%M:%S")
 #     # molted$SIZE <- molted$SIZE / 1000000
 
 #     p <- ggplot(data=molted, aes(x=factor(SOURCE), y=SIZE, colour=SOURCE))
 
-#     sizeHist <- p + geom_histogram(stat="identity", width=bins) +  ylab("Size (In millions)") + 
+#     sizeHist <- p + geom_histogram(stat="identity", width=bins) +  ylab("Size (In millions)") +
 #             xlab("BANKS") +  theme(legend.title = element_blank(),
 #                                             axis.text.y  = element_text(size=12),
 #                                             axis.title.y  = element_text(size=12),
 #                                             axis.text.x  = element_text(size=12, angle=45, hjust=1),
 #                                             axis.title.x  = element_text(size=12))
-#     sizeHist <- ggplotly(sizeHist) %>% add_annotations( 
+#     sizeHist <- ggplotly(sizeHist) %>% add_annotations(
 #                 text="Banks", xref="paper", yref="paper",
 #                 x=1.02, xanchor="left",
 #                 y=0.8, yanchor="bottom",    # Same y as legend below

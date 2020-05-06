@@ -1,7 +1,7 @@
 library(shiny)
 library(shinyjs)
 
-# Plotting 
+# Plotting
 library(ggplot2)
 library(rCharts)
 library(ggvis)
@@ -28,9 +28,9 @@ dt <- dt[!duplicated(dt[,c('FEED_TIME')]),]
 source <- sort(unique(dt$SOURCE))
 
 
-# Shiny server 
+# Shiny server
 shinyServer(function(input, output, session) {
-    
+
     # Define and initialize reactive values
     values <- reactiveValues()
     values$source <- source
@@ -38,7 +38,7 @@ shinyServer(function(input, output, session) {
     output$selectSource <- renderUI({
         checkboxGroupInput('selectSource', NULL, choices=source, selected=values$source)
     })
-    
+
     observe({
       validate(need(!is.null(input$tabset), ""))
       if (input$tabset == 2 || input$tabset == 3 || input$tabset == 4) {
@@ -50,7 +50,7 @@ shinyServer(function(input, output, session) {
       if (input$tabset == 1 || input$tabset == 2 || input$tabset == 4){
           disable("slider")
       } else {
-          enable("slider")      
+          enable("slider")
       }
     })
 
@@ -61,7 +61,7 @@ shinyServer(function(input, output, session) {
     #     checkboxGroupInput('selectSource', 'Banks', choices=source, selected=values$source)
     # })
     # })
-    
+
     observeEvent(input$select_all,{
         output$selectSource <- renderUI({
         checkboxGroupInput('selectSource', NULL, choices=source, selected=source)
@@ -87,7 +87,7 @@ shinyServer(function(input, output, session) {
             desc = TRUE
         )
         })
-    
+
     # Ask or Bid size by bank
     output$size <- renderPlotly({
         plot_size_by_bank(
@@ -108,7 +108,7 @@ shinyServer(function(input, output, session) {
 
     output$summary <- DT::renderDataTable(
         {dataTable()}, options = list(bFilter = FALSE, iDisplayLength = 50))
-    
+
     # Histogram of size
     output$spreadFreq <- renderPlotly({
         plot_spread_histograms(
@@ -129,7 +129,7 @@ shinyServer(function(input, output, session) {
 
     # Histogram of ASK size
     output$histAskSize <- renderPlot ({
-            dt = dt.agg() %>% select(SOURCE, FEED_TIME, ASK_SIZE) 
+            dt = dt.agg() %>% select(SOURCE, FEED_TIME, ASK_SIZE)
             x <- dt$ASK_SIZE / 1000000
             x <- as.numeric(unlist(x))
             bins <- seq(min(x), max(x), length.out = input$bins + 1)
@@ -140,7 +140,7 @@ shinyServer(function(input, output, session) {
 
     # Boxplots of size
     output$histBidSize <- renderPlot ({
-            dt = dt.agg() %>% select(SOURCE, FEED_TIME, BID_SIZE) 
+            dt = dt.agg() %>% select(SOURCE, FEED_TIME, BID_SIZE)
             x <- dt$BID_SIZE / 1000000
             x <- as.numeric(unlist(x))
             bins <- seq(min(x), max(x), length.out = input$bins + 1)
@@ -148,5 +148,5 @@ shinyServer(function(input, output, session) {
                     xlab = "Total BID Size (In millions)",
                     main = "Frequency of BID Size")
     })
-     
+
 })

@@ -21,7 +21,7 @@ shinyUI(
                                 "Type",
                                 c("ASK" = "ASK", "BID" = "BID"))
                     )),
-                    div(id="slider", class="slider", style="padding: 10px 0px; margin:10px", 
+                    div(id="slider", class="slider", style="padding: 10px 0px; margin:10px",
                         fluidRow(
                             sliderInput(inputId = "bins",
                                                 label = "Number of Bins:",
@@ -32,7 +32,7 @@ shinyUI(
                     ),
                     width=2
                 ),
-  
+
                 mainPanel(
                     useShinyjs(),
                     tags$head(
@@ -40,8 +40,8 @@ shinyUI(
                             "body {overflow-y: visible;}"
                             )
                             ),
-                    tabsetPanel(id = "tabset", 
-                        # Line Charts 
+                    tabsetPanel(id = "tabset",
+                        # Line Charts
                         tabPanel(value=1, p(icon("line-chart"), "Price Charts"),
                             column(10,
                                     h4('Bid/Ask Over Time Period', align = "center"),
@@ -76,7 +76,7 @@ shinyUI(
                                 )
                             )
                         ),
-                        # Data 
+                        # Data
                         tabPanel(value=4, p(icon("table"), "Data"),
                             mainPanel(
                                 column(width=12,
@@ -88,9 +88,9 @@ shinyUI(
                         )
                     )
                 )
-            
+
         ),
-        
+
         tabPanel("About",
             mainPanel(
                 includeMarkdown("include.md")
