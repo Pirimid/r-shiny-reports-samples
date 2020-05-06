@@ -16,7 +16,7 @@ library(dplyr)
 library(markdown)
 
 # Load helper functions
-source("helpers.R", local = TRUE)
+source("plotData.R", local = TRUE)
 
 
 # Load data
@@ -122,23 +122,21 @@ shinyServer(function(input, output, session) {
     # Histogram of ASK size
     output$histAskSize <- renderPlot ({
             dt = dt.agg() %>% select(SOURCE, FEED_TIME, ASK_SIZE)
-            x <- dt$ASK_SIZE / 1000000
-            x <- as.numeric(unlist(x))
-            bins <- seq(min(x), max(x), length.out = input$bins + 1)
-            hist(x, breaks = bins, col = "#75AADB", border = "white",
-                    xlab = "Total ASK Size (In millions)",
-                    main = "Frequency of ASK Size")
+            asksize <- dt$ASK_SIZE / 1000000
+            asksize <- as.numeric(unlist(asksize))
+            bins <- seq(min(asksize), max(asksize), length.out = input$bins + 1)
+            plot_hist(asksize, bins, xlab = "Total ASK Size (In millions)",
+                    title = "Frequency of ASK Size")
     })
 
     # Boxplots of size
     output$histBidSize <- renderPlot ({
             dt = dt.agg() %>% select(SOURCE, FEED_TIME, BID_SIZE)
-            x <- dt$BID_SIZE / 1000000
-            x <- as.numeric(unlist(x))
-            bins <- seq(min(x), max(x), length.out = input$bins + 1)
-            hist(x, breaks = bins, col = "#75AADB", border = "white",
-                    xlab = "Total BID Size (In millions)",
-                    main = "Frequency of BID Size")
+            bidsize <- dt$BID_SIZE / 1000000
+            bidsize <- as.numeric(unlist(bidsize))
+            bins <- seq(min(bidsize), max(bidsize), length.out = input$bins + 1)
+            plot_hist(bidsize, bins, xlab = "Total BID Size (In millions)",
+                    title = "Frequency of BID Size")
     })
 
 })

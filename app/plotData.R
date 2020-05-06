@@ -189,24 +189,15 @@ plot_spread_boxplot <- function(dt, dom, desc = FALSE) {
                 legendtitle=TRUE, showarrow=FALSE ) %>% layout( legend=list(y=0.8, yanchor="top" ) )
     }
 
-# plot_size_histogram <- function(dt, dom, bins, desc = FALSE) {
-#     molted = melt(dt, id=c("FEED_TIME", "SOURCE"), value.name = "SIZE") %>% arrange(FEED_TIME, if (desc) { desc(variable) } else { variable })
-#     molted$variable <- as.character(molted$variable)
-#     molted$SOURCE <- as.character(molted$SOURCE)
-#     molted$FEED_TIME <- as.POSIXct(molted$FEED_TIME, format="%H:%M:%S")
-#     # molted$SIZE <- molted$SIZE / 1000000
-
-#     p <- ggplot(data=molted, aes(x=factor(SOURCE), y=SIZE, colour=SOURCE))
-
-#     sizeHist <- p + geom_histogram(stat="identity", width=bins) +  ylab("Size (In millions)") +
-#             xlab("BANKS") +  theme(legend.title = element_blank(),
-#                                             axis.text.y  = element_text(size=12),
-#                                             axis.title.y  = element_text(size=12),
-#                                             axis.text.x  = element_text(size=12, angle=45, hjust=1),
-#                                             axis.title.x  = element_text(size=12))
-#     sizeHist <- ggplotly(sizeHist) %>% add_annotations(
-#                 text="Banks", xref="paper", yref="paper",
-#                 x=1.02, xanchor="left",
-#                 y=0.8, yanchor="bottom",    # Same y as legend below
-#                 legendtitle=TRUE, showarrow=FALSE ) %>% layout( legend=list(y=0.8, yanchor="top" ) )
-#     }
+#' Prepare histogram plot
+#'
+#' @param size data as array
+#' @param bins no of bins
+#' @param xlab x-label
+#' @param title main title of the plot
+#' @return histogram plot
+plot_hist <- function(size, bins, xlab, title) {
+    hist(size, breaks = bins, col = "#75AADB", border = "white",
+                    xlab = xlab,
+                    main = title)
+}

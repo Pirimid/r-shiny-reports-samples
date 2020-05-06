@@ -76,7 +76,7 @@ shinyUI(
                         tabPanel(value=4, p(icon("table"), "Data"),
                             mainPanel(
                                 column(width=12,
-                                    includeMarkdown("download.md"),
+                                    includeMarkdown("downloadInfo.md"),
                                     DT::dataTableOutput("summary", ),
                                     style = "height:1000px; width:1200px"
                                 )
@@ -89,7 +89,7 @@ shinyUI(
 
         tabPanel("About",
             mainPanel(
-                includeMarkdown("include.md")
+                includeMarkdown("info.md")
             )
         )
     )
