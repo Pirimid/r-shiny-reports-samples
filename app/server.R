@@ -54,14 +54,6 @@ shinyServer(function(input, output, session) {
       }
     })
 
-    # Add observers on clear and select all buttons
-    # observeEvent(input$clear_all,{
-    #     values$source <- c()
-    #     output$selectSource <- renderUI({
-    #     checkboxGroupInput('selectSource', 'Banks', choices=source, selected=values$source)
-    # })
-    # })
-
     observeEvent(input$select_all,{
         output$selectSource <- renderUI({
         checkboxGroupInput('selectSource', NULL, choices=source, selected=source)
